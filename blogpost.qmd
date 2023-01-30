@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+# Einleitung
+
+Diese Analyse untersucht einen Datensatz der Universität Heidelberg, bei dem Tweets bewertet wurden, ob sie offensive language enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst Präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.
+
+# Setup
+
+## Pakete laden
+
+```{r}
+#| output: false
+library(targets)
+library(tidyverse)
+library(tidymodels)
+library(tidytext)
+library(visdat)
+library(remoji)
+library(lsa)
+library(SnowballC)
+library(easystats)
+library(textrecipes)
+library(fastrtext)
+```
