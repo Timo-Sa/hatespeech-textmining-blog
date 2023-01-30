@@ -1,7 +1,7 @@
 ---
 title: "Hatespeech Textmining Blog"
 listing:
-  contents: posts
+  contents: docs
   sort: "date desc"
   type: default
   categories: true

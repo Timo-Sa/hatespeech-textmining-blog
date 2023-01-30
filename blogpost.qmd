@@ -1,7 +1,7 @@
 ---
-title: "Untitled"
+title: "Vorhersage von Hassrede"
 format: html
-editor: visual
+editor: source
 ---
 
 # Einleitung
@@ -25,4 +25,200 @@ library(SnowballC)
 library(easystats)
 library(textrecipes)
 library(fastrtext)
+```
+
+## Datensatz laden
+
+```{r}
+data_path <- "data/GermEval-2018-Data-master/germeval2018.training.txt"
+
+d <- data_read(data_path, header = FALSE, quote="")
+```
+
+```{r}
+names(d) <- c("text", "c1", "c2")
+```
+
+# EDA
+
+```{r}
+vis_dat(d)
+```
+
+```{r}
+vis_miss(d)
+```
+
+```{r}
+d %>% 
+  select(c1) %>% 
+  vis_expect(., ~.x == "OFFENSE")
+```
+
+Etwa ein Drittel der gegebenen Tweets im train-Datensatz wurden als offensive eingestuft.
+
+## Stemming & Häufigste Wörter
+
+```{r}
+d <- d %>% 
+  rowid_to_column("id")
+```
+
+### Tweets tokenisieren
+
+```{r}
+d_tokenized <- d %>% 
+  unnest_tokens(input = text, output = token, token = "tweets")
+```
+
+### Stopwords entfernen
+
+```{r}
+data(stopwords_de, package = "lsa")
+
+stopwords_de <- tibble(word = stopwords_de)
+
+stopwords_de <- stopwords_de %>% 
+  rename(token = word)
+```
+
+```{r}
+d_nostop <- d_tokenized %>% 
+  anti_join(stopwords_de)
+```
+
+### Stemming
+
+```{r}
+d_stemmed <- d_nostop %>% 
+  mutate(token_stem = wordStem(token, language = "de"))
+```
+
+```{r}
+d_stemmed %>% 
+count(token_stem, sort = TRUE) %>% 
+  head(n = 10)
+```
+
+Die häufigst genutzten Wörter lassen nur wenige Rückschlüsse ziehen. Man sieht aber, dass häufig emojis genutzt werden, um Aussagen zu unterstreichen. Sie zu analysieren könnte also sinnvoll sein. Auch scheinen sich die Tweets größtenteils mit den Themen Deutschland, Politik und PolitikerInnen zu beschäftigen.
+
+## Sentimentanalyse
+
+```{r}
+sentiws <- read_csv("data/sentiws.csv") #https://osf.io/x89wq/?action=download
+```
+
+```{r}
+d_senti <- d_nostop %>% 
+  inner_join(sentiws, by = c("token" = "word"))
+```
+
+```{r}
+d_senti %>% 
+  group_by(c1) %>% 
+  summarise(mean(value))
+```
+
+Tweets, die als offensive eingestuft wurden, weisen allgemein ein negativeres Sentiment auf, als andere. Folgend könnte das Sentiment der Wörter eines Tweets einen Prädiktor für Hate Speech darstellen.
+
+# Vorhersage
+
+Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der \_targets.R Datei mit tar_make() ausgeführt.
+
+Weitere Dateien, auf die dieser Code zugreift: train-data.R, test-data.R, def-recipes.R, def-models.R, utility.R
+
+```{r}
+#| output: false
+source("funs/train-data.R")
+source("funs/test-data.R")
+source("funs/def-models.R")
+source("funs/def-recipes.R")
+source("funs/utility.R")
+
+
+tar_option_set(packages = c("tidyverse", "tidymodels", "tidytext", "SnowballC", "easystats", "textrecipes", "remoji", "fastrtext"))
+
+# Pipeline
+list(
+  tar_target(data_train, read_train_data()),
+  tar_target(data_test, read_test_data()),
+  
+  tar_target(recipe1, def_recipe1(data_train)),
+  tar_target(rec1_prepped, prep(recipe1)),
+  tar_target(rec1_baked, bake(rec1_prepped, new_data = NULL)),
+  
+  tar_target(recipe2, def_recipe2(data_train)),
+  tar_target(rec2_prepped, prep(recipe2)),
+  tar_target(rec2_baked, bake(rec2_prepped, new_data = NULL)),
+  
+  tar_target(recipe3, def_recipe3(data_train)),
+  tar_target(rec3_prepped, prep(recipe3)),
+  tar_target(rec3_baked, bake(rec3_prepped, new_data = NULL)),
+  
+  tar_target(model_glm, def_model_glm()),
+  tar_target(model_boost, def_model_boost()),
+  
+  tar_target(wf_set, workflow_set(preproc = list(recipe1 = recipe1, recipe2 = recipe2, recipe3 = recipe3),
+                                  models = list(model_glm = model_glm, model_boost = model_boost),
+                                  cross = TRUE)),
+
+  tar_target(wf_set_adjusted, wf_set %>%
+               option_add(grid = 10, id = str_match(wf_set$wflow_id, ".*model_boost$")) %>%
+               option_add(grid = lambda_grid, id = str_match(wf_set$wflow_id, ".*model_glm$"))),
+
+  tar_target(wf_set_fit,
+             workflow_map(wf_set_adjusted, fn = "tune_grid", resamples = vfold_cv(data_train, v = 10, strata = c1), verbose = TRUE)),
+  
+  tar_target(do_autoplot, autoplot(wf_set_fit)),
+  tar_target(train_metrics, wf_set_fit %>%
+               collect_metrics() %>%
+               filter(.metric == "roc_auc") %>%
+               arrange(-mean)),
+  tar_target(best_wf_id, train_metrics %>% 
+               slice_head(n = 1) %>% 
+               pull(wflow_id)),
+  tar_target(best_wf, wf_set_fit %>%
+               extract_workflow(best_wf_id)),
+  tar_target(best_wf_fit, wf_set_fit %>% 
+               extract_workflow_set_result(best_wf_id)),
+  tar_target(best_wf_finalized, best_wf %>% 
+               finalize_workflow(select_best(best_wf_fit))),
+  tar_target(last_fit,
+             fit(best_wf_finalized, data_train)),
+  tar_target(test_predicted,
+             bind_cols(data_test, predict(last_fit, new_data = data_test)) %>% 
+               mutate(c1 = factor(c1))),
+  tar_target(test_metrics, test_predicted %>% 
+               metrics(c1, .pred_class))
+)
+```
+
+# Ergebnisse
+
+## Ergebnisse aus targets laden
+
+```{r}
+tar_load(do_autoplot)
+tar_load(train_metrics)
+tar_load(best_wf_id)
+tar_load(test_metrics)
+```
+
+## Plot
+
+```{r}
+do_autoplot
+```
+
+## Beste Workflows
+
+```{r}
+train_metrics %>% 
+slice_head(n = 5)
+```
+
+## Vorhersagen im Test-Datensatz
+
+```{r}
+test_metrics
 ```

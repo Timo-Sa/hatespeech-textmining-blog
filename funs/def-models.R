@@ -1,0 +1,21 @@
+def_model_glm <- function() {
+  
+  logistic_reg(penalty = tune(), mixture = 1) %>%
+    set_mode("classification") %>%
+    set_engine("glmnet")
+  
+}
+
+
+
+def_model_boost <- function() {
+  
+  doParallel::registerDoParallel()
+  
+  boost_tree(mtry = tune(), min_n = tune(), trees = tune(), 
+             learn_rate = tune(), tree_depth = tune(), 
+             loss_reduction = tune()) %>% 
+  set_engine("xgboost", nthreads = 12) %>% 
+  set_mode("classification")
+  
+}

@@ -46,3 +46,7 @@ po/*~
 rsconnect/
 
 /.quarto/
+
+# Ignore large files
+*.bin
+data/word_embeddings.rds
