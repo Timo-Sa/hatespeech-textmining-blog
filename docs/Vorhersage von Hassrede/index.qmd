@@ -10,7 +10,7 @@ toc: true
 
 # Einleitung
 
-Diese Analyse untersucht einen Datensatz der Universität Heidelberg [@data/0B5VML_2019], bei dem Tweets bewertet wurden, ob sie offensive language enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst Präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.
+Diese Analyse untersucht einen Datensatz der Universität Heidelberg [@data/0B5VML_2019], bei dem Tweets darauf hin bewertet wurden, ob sie beleidigende Sprache (offensive language) enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.
 
 # Setup
 
@@ -106,7 +106,7 @@ count(token_stem, sort = TRUE) %>%
   head(n = 10)
 ```
 
-Die häufigst genutzten Wörter lassen nur wenige Rückschlüsse ziehen. Man sieht aber, dass häufig emojis genutzt werden, um Aussagen zu unterstreichen. Sie zu analysieren könnte also sinnvoll sein. Auch scheinen sich die Tweets größtenteils mit den Themen Deutschland, Politik und PolitikerInnen zu beschäftigen.
+Die häufigst genutzten Wörter lassen nur wenige Rückschlüsse ziehen. Man sieht aber, dass häufig Emojis genutzt werden, möglicherweise um Aussagen zu unterstreichen. Die Emojis zu analysieren könnte also auch sinnvoll sein. Außerdem scheinen sich die Tweets größtenteils mit den Themen Deutschland, Politik und PolitikerInnen zu beschäftigen.
 
 ## Sentimentanalyse
 
@@ -129,11 +129,17 @@ Tweets, die als offensive eingestuft wurden, weisen allgemein ein negativeres Se
 
 # Vorhersage
 
-Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der [\_targets.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/_targets.R) Datei mit tar_make() ausgeführt.
+Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der [\_targets.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/_targets.R) Datei mit `tar_make()` ausgeführt.
 
-Weitere Dateien, auf die dieser Code zugreift: [train-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/train-data.R), [test-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/test-data.R), [def-recipes.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-recipes.R), [def-models.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-models.R), [utility.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/utility.R).
+Weitere Dateien, auf die dieser Code zugreift:
 
-In den Rezepten 1 und 2 wird Term Frequency Inverse Document Frequency (tf-idf) zur Vorhersage genutzt, in Rezept 3 werden dazu Wordembeddings aus FastText [@grave2018learning] verwendet.
+-   [train-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/train-data.R)
+-   [test-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/test-data.R)
+-   [def-recipes.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-recipes.R)
+-   [def-models.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-models.R)
+-   [utility.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/utility.R)
+
+In den Rezepten 1 und 2 wird die Term Frequency Inverse Document Frequency (tf-idf) zur Vorhersage genutzt, in Rezept 3 werden dazu Wordembeddings aus FastText [@grave2018learning] verwendet.
 
 ```{r}
 #| output: false
@@ -229,7 +235,7 @@ train_metrics %>%
 slice_head(n = 5)
 ```
 
-Mit einer roc_auc von .75 scheint ein Workflow aus einem Boost-Modell und Rezept 2, also einem Rezept mit tf-idf der beste Workflow zu sein. Große Unterschiede zu Rezept zwei sind in den Ergebnissen aber nicht zu erkennen.
+Mit einer roc_auc von .75 scheint ein Workflow aus einem Boost-Modell und Rezept 2, also einem Rezept mit tf-idf der beste Workflow zu sein. Große Unterschiede zwischen Rezept 2 und 3 sind in den Ergebnissen aber nicht zu erkennen.
 
 ## Vorhersagen im Test-Datensatz
 

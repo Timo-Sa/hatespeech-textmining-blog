@@ -244,7 +244,7 @@ div.csl-indent {
 
 <section id="einleitung" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Einleitung</h1>
-<p>Diese Analyse untersucht einen Datensatz der Universität Heidelberg <span class="citation" data-cites="data/0B5VML_2019">(<a href="#ref-data/0B5VML_2019" role="doc-biblioref">Wiegand 2019</a>)</span>, bei dem Tweets bewertet wurden, ob sie offensive language enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst Präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.</p>
+<p>Diese Analyse untersucht einen Datensatz der Universität Heidelberg <span class="citation" data-cites="data/0B5VML_2019">(<a href="#ref-data/0B5VML_2019" role="doc-biblioref">Wiegand 2019</a>)</span>, bei dem Tweets darauf hin bewertet wurden, ob sie beleidigende Sprache (offensive language) enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.</p>
 </section>
 <section id="setup" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Setup</h1>
@@ -357,7 +357,7 @@ div.csl-indent {
 10 deutschland  246</code></pre>
 </div>
 </div>
-<p>Die häufigst genutzten Wörter lassen nur wenige Rückschlüsse ziehen. Man sieht aber, dass häufig emojis genutzt werden, um Aussagen zu unterstreichen. Sie zu analysieren könnte also sinnvoll sein. Auch scheinen sich die Tweets größtenteils mit den Themen Deutschland, Politik und PolitikerInnen zu beschäftigen.</p>
+<p>Die häufigst genutzten Wörter lassen nur wenige Rückschlüsse ziehen. Man sieht aber, dass häufig Emojis genutzt werden, möglicherweise um Aussagen zu unterstreichen. Die Emojis zu analysieren könnte also auch sinnvoll sein. Außerdem scheinen sich die Tweets größtenteils mit den Themen Deutschland, Politik und PolitikerInnen zu beschäftigen.</p>
 </section>
 </section>
 <section id="sentimentanalyse" class="level2" data-number="3.2">
@@ -396,9 +396,16 @@ dbl (1): value
 </section>
 <section id="vorhersage" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Vorhersage</h1>
-<p>Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/_targets.R">_targets.R</a> Datei mit tar_make() ausgeführt.</p>
-<p>Weitere Dateien, auf die dieser Code zugreift: <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/train-data.R">train-data.R</a>, <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/test-data.R">test-data.R</a>, <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-recipes.R">def-recipes.R</a>, <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-models.R">def-models.R</a>, <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/utility.R">utility.R</a>.</p>
-<p>In den Rezepten 1 und 2 wird Term Frequency Inverse Document Frequency (tf-idf) zur Vorhersage genutzt, in Rezept 3 werden dazu Wordembeddings aus FastText <span class="citation" data-cites="grave2018learning">(<a href="#ref-grave2018learning" role="doc-biblioref">Grave u.&nbsp;a. 2018</a>)</span> verwendet.</p>
+<p>Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der <a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/_targets.R">_targets.R</a> Datei mit <code>tar_make()</code> ausgeführt.</p>
+<p>Weitere Dateien, auf die dieser Code zugreift:</p>
+<ul>
+<li><a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/train-data.R">train-data.R</a></li>
+<li><a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/test-data.R">test-data.R</a></li>
+<li><a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-recipes.R">def-recipes.R</a></li>
+<li><a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-models.R">def-models.R</a></li>
+<li><a href="https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/utility.R">utility.R</a></li>
+</ul>
+<p>In den Rezepten 1 und 2 wird die Term Frequency Inverse Document Frequency (tf-idf) zur Vorhersage genutzt, in Rezept 3 werden dazu Wordembeddings aus FastText <span class="citation" data-cites="grave2018learning">(<a href="#ref-grave2018learning" role="doc-biblioref">Grave u.&nbsp;a. 2018</a>)</span> verwendet.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"funs/train-data.R"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"funs/test-data.R"</span>)</span>
@@ -505,7 +512,7 @@ dbl (1): value
 # … with abbreviated variable name ¹​.estimator</code></pre>
 </div>
 </div>
-<p>Mit einer roc_auc von .75 scheint ein Workflow aus einem Boost-Modell und Rezept 2, also einem Rezept mit tf-idf der beste Workflow zu sein. Große Unterschiede zu Rezept zwei sind in den Ergebnissen aber nicht zu erkennen.</p>
+<p>Mit einer roc_auc von .75 scheint ein Workflow aus einem Boost-Modell und Rezept 2, also einem Rezept mit tf-idf der beste Workflow zu sein. Große Unterschiede zwischen Rezept 2 und 3 sind in den Ergebnissen aber nicht zu erkennen.</p>
 </section>
 <section id="vorhersagen-im-test-datensatz" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="vorhersagen-im-test-datensatz"><span class="header-section-number">5.4</span> Vorhersagen im Test-Datensatz</h2>
