@@ -61,12 +61,3 @@ list(
   tar_target(test_metrics, test_predicted %>% 
                metrics(c1, .pred_class))
 )
-
-
-# tar_load()
-
-# tar_make()
-
-# tar_visnetwork()
-
-# tar_meta(fields = warnings, complete_only = TRUE)

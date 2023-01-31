@@ -1,8 +1,8 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-best_wf|stem|f526206c0830bf57|d690486675d9b357|da5107fb277befd2|-1828405325||t19381.8183048482s|16eee1afa8f0c411|5467312|rds|local|vector|||0.03||
-best_wf_finalized|stem|19f9cf020fb669d4|38422129b8aea6a5|003a6c365ffe6acb|2137899803||t19381.818365097s|2acdf518576910d4|5467331|rds|local|vector|||2.67|No value of metric was given metric roc_auc will be used.|
-best_wf_fit|stem|bc0446f0aba1eeec|34448c98a02be0fa|f9df5bb859a5552f|-1903702811||t19381.8183164627s|30c03bc55aac19e5|3686150|rds|local|vector|||0.05||
-best_wf_id|stem|7b4d3d296b5b923c|55a93ce81d62088b|61d5b7579fb2c0c3|-1277093486||t19381.8182898169s|c6fbfb9abe15abfd|72|rds|local|vector|||0.11||
+best_wf|stem|c589795aefef8d8a|d690486675d9b357|1f6c62a5cf2f0b44|-1828405325||t19387.8152384207s|12c97cc1e356f131|5822062|rds|local|vector|||0||
+best_wf_finalized|stem|05c4e5cc746dc87d|38422129b8aea6a5|98073897addaf8dd|2137899803||t19387.8152620185s|2c0c28202cee34b1|5822079|rds|local|vector|||0.33|No value of metric was given metric roc_auc will be used.|
+best_wf_fit|stem|289fdb54cedba57e|34448c98a02be0fa|195b16d25f682549|-1903702811||t19387.8152458464s|b2734f13536503e0|3686114|rds|local|vector|||0.02||
+best_wf_id|stem|7b4d3d296b5b923c|55a93ce81d62088b|93807f869d1a2a43|-1277093486||t19387.8152268827s|c6fbfb9abe15abfd|72|rds|local|vector|||0.02||
 best_wf_id_4|stem|1fcdca0bb3a700e7|99d325be710abdec|e6bdab9a1f3826d6|-1313781881||t19385.7369974471s|c6fbfb9abe15abfd|72|rds|local|vector|||0||
 calculate_sentiment|function|28fe83095e1d9117|||||||||||||||
 count_lexicon|function|5fe6f15e04d34294|||||||||||||||
@@ -13,12 +13,12 @@ def_model_glm|function|5f49d46e5d2d592e|||||||||||||||
 def_model1|function|5f49d46e5d2d592e|||||||||||||||
 def_recipe|function|58286bd3bfb596da|||||||||||||||
 def_recipe1|function|095e332750770e06|||||||||||||||
-def_recipe2|function|883ac6fafad19c61|||||||||||||||
-def_recipe3|function|fbff57be0835746b|||||||||||||||
+def_recipe2|function|63ac55452235eb63|||||||||||||||
+def_recipe3|function|daf52cf0ed931de9|||||||||||||||
 def_recipe4|function|63ac55452235eb63|||||||||||||||
-do_autoplot|stem|f62c8c5a7546f0de|f98453996e8cac08|535a813608b90d68|-674570614||t19381.4903979039s|bfd84284133fa6f6|49196521|rds|local|vector|||0.48||
+do_autoplot|stem|c3839b031dbb1b8b|f98453996e8cac08|00fdd181c84db36a|-674570614||t19387.8151255726s|a904669eb6bcf1d9|4328296779|rds|local|vector|||0.87||
 lambda_grid|object|1dd543e9a973bdb9|||||||||||||||
-last_fit|stem|1dc5f5641563c771|212dbdb4124ec07f|297e179f0d244efe|1119300514||t19381.8205453614s|4376fc9d3ae48a7a|6207740|rds|local|vector|||187.09||
+last_fit|stem|e6b2af6e4913abab|212dbdb4124ec07f|a9e661aa3ba89b18|1119300514||t19387.817516133s|b578438b18bff11e|6589131|rds|local|vector|||193.63||
 metrics_train|stem|cf1cdea5783582a5|ed34f6a183dd6d5a|66c220a9854c7c76|1457946597||t19381.490295414s|7e3c82f65408f152|825|rds|local|vector|||0.08||
 model_boost|stem|e63f539359578c71|e2e85d80c3e2b242|cc2edc1ff2f46b2d|812959557||t19381.4257896226s|253d6f95309bef1a|362|rds|local|vector|||5.52|Paket tidyverse wurde unter R Version 4.2.2 erstellt. Paket easystats wurde unter R Version 4.2.2 erstellt. Paket textrecipes wurde unter R Version 4.2.2 erstellt|
 model_glm|stem|38c9603ee27881e0|2d817fdf2045e71d|942e5f034b57965d|-1710445127||t19378.5371120248s|f2a5e99bcf184b36|287|rds|local|vector|||3.83|Paket tidyverse wurde unter R Version 4.2.2 erstellt. Paket ggplot2 wurde unter R Version 4.2.2 erstellt. Paket easystats wurde unter R Version 4.2.2 erstellt. Paket textrecipes wurde unter R Version 4.2.2 erstellt|
@@ -27,24 +27,24 @@ read_test_data|function|04fe94808b0143e3|||||||||||||||
 read_train_data|function|7a3644ead9c7ff34|||||||||||||||
 rec1_baked|stem|676ad0d7b9451af2|80dbfde7ee41cd19|bc34f5809332a169|-993212778||t19380.4172435383s|d1adf02a6657302e|87366|rds|local|vector|||0||
 rec1_prepped|stem|73864c0cb2683b3a|15c9fdea599a8950|21415d62c6b62f43|242310821||t19380.4158679452s|51f48445321053a1|3275718|rds|local|vector|||1.01||
-rec2_baked|stem|8801accf8f60e116|1625530e36641f4b|33427ad9c853c983|-667612671||t19380.4315413617s|7f77bf0e89a82431|154690|rds|local|vector|||0||
-rec2_prepped|stem|51788858675fa663|2f70ad7a4678d981|71b26a4b367e86d2|-1492316390||t19380.4172422496s|706d933b99092092|5624052|rds|local|vector|||116.38||
-rec3_baked|stem|e9198aa670f04f99|7b1d9b566bb2ef95|018c3128c106cd60|711376061||t19380.5584516693s|1a391349799022c3|7029310|rds|local|vector|||0.02||
-rec3_prepped|stem|4cad31d162642e2f|8e914988f70641e6|1a6b51e6fad01879|516372859||t19380.5584189631s|de838868a9f6c5e4|1205517715|rds|local|vector|||132.58||
+rec2_baked|stem|535dc283956a9d7f|1625530e36641f4b|9ef8eea7775ed4c5|-667612671||t19387.5633159131s|77e6afcebac6c665|166453|rds|local|vector|||0.02||
+rec2_prepped|stem|07015cdf0cf6a9a6|2f70ad7a4678d981|d63f2ca610104c0c|-1492316390||t19387.5530858496s|a04c38157178f9a4|5999259|rds|local|vector|||154.78||
+rec3_baked|stem|632ae2ea382afedd|7b1d9b566bb2ef95|75683059bce0ff34|711376061||t19387.5633206396s|a69678c7a4640b1f|7042003|rds|local|vector|||0.01||
+rec3_prepped|stem|3f2d02630d9cf1a5|8e914988f70641e6|dce34e374b1b34dd|516372859||t19387.5582233855s|7208384107ce4c5a|1205882781|rds|local|vector|||161.78||
 recipe1|stem|e8922484e26fe20a|13f49c1bdb532343|5be2a3bcab2cfa7e|1578298187||t19380.4158382219s|4131e3fd04bb24bd|3178428|rds|local|vector|||0.11||
-recipe2|stem|ede3c62d824b8be8|3ab4ee5786f37230|9d9ff522bfc5af40|1810695935||t19380.4158493959s|2857b9168b901659|5466730|rds|local|vector|||0.1||
-recipe3|stem|3a25ec76b6c99a3f|a25aef9dc33b7f67|b4a977c801e691f5|2039325248||t19380.5481980741s|654fb78910d93e89|1198467027|rds|local|vector|||0.14||
+recipe2|stem|ffeba4c1e15d97ee|3ab4ee5786f37230|4f7ae534e983dc63|1810695935||t19387.5479981392s|bb7e89e92fe81696|5821546|rds|local|vector|||0.16||
+recipe3|stem|6d9656653e901d2e|a25aef9dc33b7f67|0ef566cf937904ac|2039325248||t19387.5512724766s|49c6208460175541|1198826679|rds|local|vector|||0.75||
 recipe4|stem|a413fb66659d71d9|9a52171c7c3e0f12|64dc5256519a5a8e|-123264887||t19385.6589405348s|37f334ad1347d0f8|5821570|rds|local|vector|||0.17||
-test_metrics|stem|f5e5bb780484ac0e|6a1bc3ce5e8eb63f|8e17a247a23bef55|716945965||t19381.8216204466s|2721c650416a264a|204|rds|local|vector|||0.06||
+test_metrics|stem|f410928a03e0bb5e|6a1bc3ce5e8eb63f|25603e07896dbef2|716945965||t19387.819022197s|ed0b2f97180e0b86|205|rds|local|vector|||0.01||
 test_metrics_new|stem||6a1bc3ce5e8eb63f|aa1eaf1fc46dda8c|1895797596||t19380.6423245398s||0|rds|local|vector|||19.08|Paket tidyverse wurde unter R Version 4.2.2 erstellt. Paket easystats wurde unter R Version 4.2.2 erstellt. Paket textrecipes wurde unter R Version 4.2.2 erstellt|Objekt test_predicted nicht gefunden
-test_predicted|stem|22a41cb0a6d4bf76|71c455f9a213af91|c27d20eda1688316|-1164490569||t19381.8216195929s|b42ff18a6789a8fc|213827|rds|local|vector|||92.5||
-train_metrics|stem|7ae7bae7f048b5f5|ed34f6a183dd6d5a|af4262920ad57386|651372177||t19381.8182875125s|8eb7d3ede8b1d380|1679|rds|local|vector|||6.47||
+test_predicted|stem|dfea8ba166e6fc07|71c455f9a213af91|011dd0e02c50ad6c|-1164490569||t19387.8190218843s|59baf0eda1d5bbb7|213820|rds|local|vector|||130.02||
+train_metrics|stem|d944afc3fccc4894|ed34f6a183dd6d5a|464a5f385724d0d5|651372177||t19387.8026920175s|62f1d1bd6d4f494f|1675|rds|local|vector|||0.22||
 train_metrics_4|stem|e4883bfa7b323784|2e6e06d2e5ee2be2|3e61c8077531a5a8|549629883||t19385.7369972733s|61e95fb884ab91c7|845|rds|local|vector|||0.11||
-wf_set|stem|4529ab4e028caee9|8444151a62e8ec88|6374477e7d6c6144|-135159059||t19381.5385170077s|2ef371785ff25f50|1804696502|rds|local|vector|||4.16||
+wf_set|stem|dc6dbd1ded4a3e01|8444151a62e8ec88|d3f7680ead9d1ceb|-135159059||t19387.5632979345s|8ebde4c010d4ee95|1805414660|rds|local|vector|||3.55||
 wf_set_4|stem|234cfba02951163a|efe411ffa7de7c75|b7368c2126a49a41|1136970274||t19385.6589568941s|e6edf674ad90fc1e|6177767|rds|local|vector|||0.06||
-wf_set_adjusted|stem|4c76737b9215b52c|faeebb3984dc9477|bcd6fa3838fc7942|-1187587348||t19381.5435764183s|c90243c2bdd3edfe|1804696907|rds|local|vector|||0.58|Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA|
+wf_set_adjusted|stem|89d4c2bf59ab14e2|faeebb3984dc9477|2c30cae7540c777b|-1187587348||t19387.5682862105s|c4e500527841666a|1805415077|rds|local|vector|||0.02|Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA. Dont have an id value NA|
 wf_set_adjusted_4|stem|241f47c9cd847b4d|9b5c1ea594441d21|2f7c9d38bb885326|1059935042||t19385.6589780662s|7a35d2c6b85c7b8a|6178245|rds|local|vector|||0.03|Dont have an id value NA. Dont have an id value NA|
-wf_set_fit|stem|862f609828666180|76430f1840b21475|67b58f88809c68ff|-1497740924||t19381.8181111966s|037e0bfcce9187a4|1848876334|rds|local|vector|||18085.79|Paket glmnet wurde unter R Version 4.2.2 erstellt. Paket Matrix wurde unter R Version 4.2.2 erstellt. Paket textfeatures wurde unter R Version 4.2.2 erstellt|
+wf_set_fit|stem|3338ce494618d839|76430f1840b21475|51601c6fd7ee438a|-1497740924||t19387.8026404196s|4a6d6091c2065987|1849597863|rds|local|vector|||19774.75|Paket glmnet wurde unter R Version 4.2.2 erstellt. Paket Matrix wurde unter R Version 4.2.2 erstellt. Paket textfeatures wurde unter R Version 4.2.2 erstellt|
 wf_set_fit_4|stem|129119b0c98f23c0|449ec41a561c78be|4ac89d7d02ac5e32|-2023104577||t19385.7369925741s|ed33da3086fefef8|20908423|rds|local|vector|||6736.86|Paket textfeatures wurde unter R Version 4.2.2 erstellt. Paket glmnet wurde unter R Version 4.2.2 erstellt. Paket Matrix wurde unter R Version 4.2.2 erstellt|
 wild_emojis|object|25b1479b58fb9386|||||||||||||||
 word_embeddings|object|2445adc1f7bdbae6|||||||||||||||

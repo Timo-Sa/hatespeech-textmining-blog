@@ -1,12 +1,16 @@
 ---
 title: "Vorhersage von Hassrede"
+author: "Timo Sandrock"
 format: html
-editor: source
+editor: visual
+bibliography: quellen.bib
+number-sections: true
+toc: true
 ---
 
 # Einleitung
 
-Diese Analyse untersucht einen Datensatz der Universität Heidelberg, bei dem Tweets bewertet wurden, ob sie offensive language enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst Präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.
+Diese Analyse untersucht einen Datensatz der Universität Heidelberg [@data/0B5VML_2019], bei dem Tweets bewertet wurden, ob sie offensive language enthalten. Das Ziel dieser Analyse ist es, ein prädiktives Modell zu entwickeln, um möglichst Präzise vorhersagen zu können, ob ein neuer Tweet offensive language und somit möglicherweise Hassrede enthält.
 
 # Setup
 
@@ -30,6 +34,7 @@ library(fastrtext)
 ## Datensatz laden
 
 ```{r}
+#| output: false
 data_path <- "data/GermEval-2018-Data-master/germeval2018.training.txt"
 
 d <- data_read(data_path, header = FALSE, quote="")
@@ -42,6 +47,7 @@ names(d) <- c("text", "c1", "c2")
 # EDA
 
 ```{r}
+#| warning: false
 vis_dat(d)
 ```
 
@@ -123,9 +129,11 @@ Tweets, die als offensive eingestuft wurden, weisen allgemein ein negativeres Se
 
 # Vorhersage
 
-Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der \_targets.R Datei mit tar_make() ausgeführt.
+Die Vorhersage der Daten wird über das targets-Package gemacht. Dazu wurde folgender Code in der [\_targets.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/_targets.R) Datei mit tar_make() ausgeführt.
 
-Weitere Dateien, auf die dieser Code zugreift: train-data.R, test-data.R, def-recipes.R, def-models.R, utility.R
+Weitere Dateien, auf die dieser Code zugreift: [train-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/train-data.R), [test-data.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/test-data.R), [def-recipes.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-recipes.R), [def-models.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/def-models.R), [utility.R](https://github.com/Timo-Sa/hatespeech-textmining-blog/blob/main/funs/utility.R).
+
+In den Rezepten 1 und 2 wird Term Frequency Inverse Document Frequency (tf-idf) zur Vorhersage genutzt, in Rezept 3 werden dazu Wordembeddings aus FastText [@grave2018learning] verwendet.
 
 ```{r}
 #| output: false
@@ -193,6 +201,10 @@ list(
 )
 ```
 
+## Visualisierung des Ablaufs
+
+![](image.png)
+
 # Ergebnisse
 
 ## Ergebnisse aus targets laden
@@ -217,8 +229,12 @@ train_metrics %>%
 slice_head(n = 5)
 ```
 
+Mit einer roc_auc von .75 scheint ein Workflow aus einem Boost-Modell und Rezept 2, also einem Rezept mit tf-idf der beste Workflow zu sein. Große Unterschiede zu Rezept zwei sind in den Ergebnissen aber nicht zu erkennen.
+
 ## Vorhersagen im Test-Datensatz
 
 ```{r}
 test_metrics
 ```
+
+Angewandt am Test-Datensatz scheint das Modell eine accuracy von 0.69 und ein Kappa von 0.15 vorzuweisen. Das relativ niedrige Kappa weist darauf hin, dass das Modell nur bedingt dazu geeignet ist, Hate Speech oder Offensive Language in Tweets zu bestimmen.

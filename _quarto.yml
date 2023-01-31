@@ -1,6 +1,7 @@
 project:
   type: website
   output-dir: docs
+  execute-dir: project
 
 website:
   title: "Hatespeech Textmining Blog"
@@ -15,3 +16,4 @@ format:
     theme: cosmo
     css: styles.css
 
+lang: de
